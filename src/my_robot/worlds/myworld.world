@@ -4639,7 +4639,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='my_robot'>
+      <!-- model name='my_robot'>
         <pose frame=''>2.30021 -2.69945 0.1 3e-06 -0 1.56115</pose>
         <scale>1 1 1</scale>
         <link name='robot_footprint'>
@@ -4660,7 +4660,7 @@
           <acceleration>-0.00844 0.000926 9.33159 -0.566857 0.184888 0.032083</acceleration>
           <wrench>-0.042201 0.004629 46.658 0 -0 0</wrench>
         </link>
-      </model>
+      </model -->
       <model name='robot-03'>
         <pose frame=''>7.34803 -4.71021 0.042045 0.000902 -9e-06 -1.55814</pose>
         <scale>1 1 1</scale>
@@ -10624,7 +10624,7 @@
       <allow_auto_disable>1</allow_auto_disable>
       <pose frame=''>2.81619 -0.691691 0 0 -0 0</pose>
     </model>
-    <model name='my_robot'>
+    <!-- model name='my_robot'>
       <link name='robot_footprint'>
         <pose frame=''>0 0 0 0 -0 0</pose>
         <inertial>
@@ -11040,6 +11040,6 @@
         <robotNamespace>/</robotNamespace>
       </plugin>
       <pose frame=''>2.3 -2.6 0 0 -0 1.5708</pose>
-    </model>
+    </model -->
   </world>
 </sdf>

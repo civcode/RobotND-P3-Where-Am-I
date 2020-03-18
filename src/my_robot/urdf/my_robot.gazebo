@@ -1,6 +1,38 @@
 <?xml version="1.0"?>
 <robot>
 
+  <!-- Gazebo material properties -->
+ 
+  <gazebo reference="chassis">
+    <material>Gazebo/Blue</material>
+    <mu1>0.85</mu1>
+    <mu2>0.85</mu2>
+  </gazebo>
+  
+  <gazebo reference="caster">
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+    <material>Gazebo/White</material>
+  </gazebo>
+  
+  <gazebo reference="wheel_left">
+    <mu1>0.85</mu1>
+    <mu2>0.85</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  
+  <gazebo reference="wheel_right">
+    <mu1>0.85</mu1>
+    <mu2>0.85</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  
+  <gazebo reference="camera">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  
+  
+
   <gazebo>
     <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
       <legacyMode>false</legacyMode>
