@@ -1,0 +1,36 @@
+<?xml version='1.0'?>
+
+<!-- robot name="my_robot_sim" xmlns:xacro="http://ros.org/wiki/xacro" -->
+<robot>
+ 
+  <gazebo reference="chassis">
+    <material>Gazebo/Blue</material>
+    <mu1>0.85</mu1>
+    <mu2>0.85</mu2>
+  </gazebo>
+  
+  <gazebo reference="caster">
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+    <material>Gazebo/White</material>
+  </gazebo>
+  
+  <gazebo reference="wheel_left">
+    <mu1>0.85</mu1>
+    <mu2>0.85</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  
+  <gazebo reference="wheel_right">
+    <mu1>0.85</mu1>
+    <mu2>0.85</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  
+  <gazebo reference="camera">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  
+  
+
+</robot>
