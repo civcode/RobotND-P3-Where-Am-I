@@ -7,6 +7,13 @@
 
 ros::ServiceClient client;
 
+float v_max = 0.50f;
+float v_min = 0.0f;
+float w_max = 1.0f;
+//float w_min = 0.0f;
+float A_max = 140.0e3;
+float A_min = 1.2e3;
+
 // This function calls the command_robot service to drive the robot in the specified direction
 void drive_robot(float lin_x, float ang_z)  {
     
@@ -16,7 +23,7 @@ void drive_robot(float lin_x, float ang_z)  {
     srv.request.angular_z = ang_z;
 
     if (!client.call(srv))
-	ROS_ERROR("Failed to call servivce command_robot");
+		ROS_ERROR("Failed to call servivce command_robot");
 }
 
 
@@ -27,7 +34,6 @@ void process_image_callback(const sensor_msgs::ImageConstPtr& img) {
 	cv_bridge::CvImagePtr cv_ptr;
 	try {
 	    cv_ptr = cv_bridge::toCvCopy(img, sensor_msgs::image_encodings::BGR8);
-		//cv_ptr = cv_bridge::toCvCopy(img, "bgr8");
 	} catch (cv_bridge::Exception& e) {
 	    ROS_ERROR("cv_bridge exception: %s", e.what());
 	    return;
@@ -43,6 +49,7 @@ void process_image_callback(const sensor_msgs::ImageConstPtr& img) {
 	cv::Point text_offset(10, 30);
 	// Verify that binary image is not all zeros
 	if (cv::sum(img_binary).val[0] > 0) {
+		// white ball is visible
 		cv::Moments mu;
 
 		mu = cv::moments(img_binary, true);
@@ -52,15 +59,35 @@ void process_image_callback(const sensor_msgs::ImageConstPtr& img) {
 
 		std::ostringstream oss;
 		oss.precision(2);
+		oss.setf(std::ios::fixed);
 		oss << "cols:" << img_binary.cols << ", rows:"  << img_binary.rows << ", mean[" 
 			<< x_mean << "," << y_mean << "]";
 
 		cv::putText(img_binary, oss.str(), text_offset, cv::FONT_HERSHEY_DUPLEX, 1.0, 
 					CV_RGB(255,255,255), 2);
 
-		printf("mean: %1.2f, %1.2f\n", x_mean, y_mean);
+		cv::circle(img_binary, cv::Point(x_mean, y_mean), 10, CV_RGB(0,0,0), 5);
+		
+		//printf("mean: %1.2f, %1.2f\n", x_mean, y_mean);
+		//printf("area: %0.2f\n", mu.m00);
+
+		// compute linear velocity depending on the size of the ball in the image
+		float A = mu.m00; // area in pixel
+		float v = v_max*(1.0f-(1.0f/(A_max-A_min)*(A-A_min)));
+		// apply saturation for v
+		v = std::max(std::min(v, v_max), v_min);
+
+		// compute angular velocity
+		float dx_max = static_cast<float>(img_binary.cols)/2.0f;
+		float dx = x_mean-dx_max;
+		float w = -w_max*((1.0f/dx_max)*dx);
+		// apply saturation for w
+		w = std::max(std::min(w, w_max), -w_max);
+
+		drive_robot(v, w);
 
 	} else {
+		// white ball is not visible
 		std::ostringstream oss;
 		oss.precision(2);
         oss.setf(std::ios::fixed);
@@ -68,6 +95,9 @@ void process_image_callback(const sensor_msgs::ImageConstPtr& img) {
 
 		cv::putText(img_binary, oss.str(), text_offset, cv::FONT_HERSHEY_DUPLEX, 1.0, 
 					CV_RGB(255,255,255), 2);
+
+		// stop robot
+		drive_robot(0.0f, 0.0f);
 
 	}
 
