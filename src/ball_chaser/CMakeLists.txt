@@ -204,4 +204,15 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+include_directories(include ${catkin_INCLUDE_DIRS})
+
+add_compile_options(-std=c++11)
+
+add_executable(drive_bot src/drive_bot.cpp)
+target_link_libraries(drive_bot ${catkin_LIBRARIES})
+#add_dependencies(drive_bot ball_chaser_generate_messages_cpp)
+
+
+
+
+
