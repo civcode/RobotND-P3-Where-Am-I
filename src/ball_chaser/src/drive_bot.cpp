@@ -37,7 +37,6 @@ int main(int argc, char** argv) {
 
     motor_command_publisher = n.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
 
-    //todo: drive service
     ros::ServiceServer service = n.advertiseService("/ball_chaser/command_robot", handle_drive_request);
 
     ROS_INFO("Ready to send motor commands");

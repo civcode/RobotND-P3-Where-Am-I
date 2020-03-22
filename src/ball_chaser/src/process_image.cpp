@@ -47,6 +47,7 @@ void process_image_callback(const sensor_msgs::ImageConstPtr& img) {
     cv::threshold(img_gray, img_binary, 254, 255, cv::THRESH_BINARY);
 
     cv::Point text_offset(10, 30);
+  
     // Verify that binary image is not all zeros
     if (cv::sum(img_binary).val[0] > 0) {
         // white ball is visible
