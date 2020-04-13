@@ -103,9 +103,11 @@ void process_image_callback(const sensor_msgs::ImageConstPtr& img) {
     }
 
     //cv::imshow("grayscale image", img_gray);
-    cv::imshow("binary image", img_binary);
 
-    cv::waitKey(1);
+    // Disabled image processing part for RobotND project 3
+    //cv::imshow("binary image", img_binary);
+
+    //cv::waitKey(1);
             
 }
 
@@ -119,10 +121,13 @@ int main(int argc, char** argv)
     client = n.serviceClient<ball_chaser::DriveToTarget>("/ball_chaser/command_robot");
 
     // Subscribe to /camera/rgb/image_raw topic to read the image data inside the process_image_callback function
+    
+    /* Disabled image processing part for RobotND project 3
     ros::Subscriber sub1 = n.subscribe("/camera/rgb/image_raw", 10, process_image_callback);
 
     //cv::namedWindow("grayscale image", cv::WINDOW_NORMAL);
     cv::namedWindow("binary image", cv::WINDOW_NORMAL);
+    */
 
     ROS_INFO("Ready to process images");
 
