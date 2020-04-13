@@ -23,13 +23,13 @@ $ catkin_init_workspace
 $ cd .. && catkin_make
 ```
 
-### Lauch ROS and Gazebo
+### Launch ROS and Gazebo
 ```
 $ source devel/setup.bash
 $ roslaunch my_robot world.launch
 ```
 
-### Lauch ROS AMCL and move_base
+### Launch ROS AMCL and move_base
 ```
 $ source devel/setup.bash
 $ roslaunch my_robot amcl.launch
